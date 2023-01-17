@@ -1,0 +1,40 @@
+{
+  "name": "h5p-course-presentation",
+  "version": "1.20.0",
+  "description": "A free HTML5- based presentation content type which allows users to add multiple choice, fill in the blanks, texts and other types of interactions to their presentations using only a web browser.",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV='production' webpack",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h5p/h5p-course-presentation.git"
+  },
+  "keywords": [
+    "h5p",
+    "content-type"
+  ],
+  "author": "Joubel",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
+    "@babel/plugin-transform-object-assign": "^7.14.5",
+    "@babel/preset-env": "^7.15.8",
+    "babel-loader": "^8.2.3",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.4.0",
+    "eslint": "^8.1.0",
+    "h5p-lib-controls": "0.0.15",
+    "h5p-parent": "0.0.2",
+    "mini-css-extract-plugin": "^2.4.3",
+    "regenerator-runtime": "^0.13.9",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.43.3",
+    "sass-loader": "^12.2.0",
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

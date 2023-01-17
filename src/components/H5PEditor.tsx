@@ -11,7 +11,7 @@ declare global {
   }
 }
 const H5PEditor = ({ h5p }: Props) => {
-
+console.log('h5p',h5p)
   useEffect(() => {
     if (h5p) {
       window.H5P = window.H5P || {};
