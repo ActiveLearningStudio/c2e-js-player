@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AddC2e from "./c2e/addc2e";
 import Myc2e from "./c2e/mysc2e";
-import Test from "./c2e/test";
+
 import "./App.css";
 
 function App() {
@@ -15,9 +15,7 @@ function App() {
         <Route exact path="/myC2e">
           <Myc2e />
         </Route>
-        <Route exact path="/test">
-          <Test />
-        </Route>
+        
       </Switch>
     </Router>
   );
