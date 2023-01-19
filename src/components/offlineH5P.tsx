@@ -29,24 +29,38 @@ const OfflineH5P = ({ h5p }: Props) => {
   }, [h5p]);
 
   const loadAssets = (styles: any, scripts: any) => {
-    styles.forEach((style: any) => {
-      const link = document.createElement("link");
-      link.href = style;
-      link.type = "text/css";
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-    });
-    // scripts.forEach((script: any, key: any) => {
-    //   if (key >= 11) {
-    //     const element = document.createElement("script");
-    //     element.onload = () => {
-    //       console.log(`Assets loaded: ${element.src}`);
-    //     };
-    //     element.src = script;
-    //     element.async = false;
-    //     document.body.appendChild(element);
-    //   }
+    // styles.forEach((style: any) => {
+    //   const link = document.createElement("link");
+    //   link.href = style;
+    //   link.type = "text/css";
+    //   link.rel = "stylesheet";
+    //   document.head.appendChild(link);
     // });
+    // all style head
+    // style 1
+    const link = document.createElement("link");
+    link.href = "h5p/laravel-h5p/css/laravel-h5p.css";
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+    // style 2
+    const link1 = document.createElement("link");
+    link1.href = "h5p/h5p-core/styles/h5p.css";
+    link1.type = "text/css";
+    link1.rel = "stylesheet";
+    document.head.appendChild(link1);
+    // style 3
+    const link3 = document.createElement("link");
+    link3.href = "h5p/h5p-core/styles/h5p-confirmation-dialog.css";
+    link3.type = "text/css";
+    link3.rel = "stylesheet";
+    document.head.appendChild(link3);
+    // style 4
+    const link4 = document.createElement("link");
+    link4.href = "h5p/h5p-core/styles/h5p-core-button.css";
+    link4.type = "text/css";
+    link4.rel = "stylesheet";
+    document.head.appendChild(link4);
     // all scripts
     const element = document.createElement("script");
     element.onload = () => {
@@ -232,14 +246,14 @@ const OfflineH5P = ({ h5p }: Props) => {
     element22.src = "libraries/H5P.JoubelUI-1.3/js/joubel-progressbar.js?ver=1.3.9";
     element22.async = false;
     document.body.appendChild(element22);
-     //script 23
-     const element23 = document.createElement("script");
-     element23.onload = () => {
-       console.log(`Assets loaded: ${element23.src}`);
-     };
-     element23.src = "libraries/H5P.JoubelUI-1.3/js/joubel-ui.js?ver=1.3.9";
-     element23.async = false;
-     document.body.appendChild(element23);
+    //script 23
+    const element23 = document.createElement("script");
+    element23.onload = () => {
+      console.log(`Assets loaded: ${element23.src}`);
+    };
+    element23.src = "libraries/H5P.JoubelUI-1.3/js/joubel-ui.js?ver=1.3.9";
+    element23.async = false;
+    document.body.appendChild(element23);
   };
   return (
     <div>
