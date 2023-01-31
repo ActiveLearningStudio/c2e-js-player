@@ -45,7 +45,7 @@ function WriterC2e() {
             const contents = [];
             // const contentsDetail = [];
             let dummyArray = [];
-
+            let playlistArray = [];
             loadzip.forEach((relativePath, zipEntry) => {
               contents.push(zipEntry.name);
             });
@@ -70,6 +70,8 @@ function WriterC2e() {
             //root path linking
             const rootprojectSchema = JSON.parse(JSON.stringify(schema));
             const playlistSchema = JSON.parse(JSON.stringify(schema));
+            const activitySchema = JSON.parse(JSON.stringify(schema));
+            const activityh5pSchema = JSON.parse(JSON.stringify(schema));
             if (rootprojectSchema) {
               let rootcompoPath = {
                 "@id": "c2ens:c2eid-xxx-2",
@@ -83,38 +85,90 @@ function WriterC2e() {
               rootprojectSchema?.c2eContain[1]?.c2eComponents?.push(rootcompoPath);
               zip.file(`c2e.json`, JSON.stringify(rootprojectSchema));
             }
+            //find number of playlist
+            allPaths?.forEach((filePath) => {
+              if (filePath !== "playlists" && filePath.includes("/activities/")) {
+                let fg = filePath.split("playlists/");
+
+                fg = fg[1].split("/activities");
+                playlistArray = [...playlistArray, fg[0]];
+              }
+            });
+            const removeDuplicatePlaylist = new Set(playlistArray);
+            const playlistName = Array.from(removeDuplicatePlaylist);
 
             //playlist submenifest linking
             if (playlistSchema) {
               allPaths?.forEach((filePath) => {
                 if (filePath !== "playlists" && !filePath.includes("/activities")) {
+                  let u_path = filePath.split("playlists/");
+
                   let c2ecompo = {
-                    "@id": j,
+                    "@id": "c2ens:c2eid-xxx-2",
                     "@type": "C2E",
                     "@index": "2",
-                    name: filePath,
+                    name: "sample content name",
                     c2eType: "H5P",
-                    subManifest: `./${filePath}/c2e.json`,
+                    subManifest: `./${u_path[1]}/c2e.json`,
                   };
-
                   playlistSchema.c2eContain[1].c2eComponents.push(c2ecompo);
+                }
+                if (filePath !== "playlists" && filePath.includes("/activities/")) {
+                  let u_path = filePath.split("/activities/");
+                  console.log("u_path", u_path);
+                  let c2ecompo = {
+                    "@id": "c2ens:c2eid-xxx-2",
+                    "@type": "C2E",
+                    "@index": "2",
+                    name: "activity name",
+                    c2eType: "H5P",
+                    subManifest: `./${u_path[1]}/c2e.json`,
+                  };
+                  for (var x = 0; x < playlistName.length; x++) {
+                    if (filePath.includes(playlistName[x])) {
+                      activityh5pSchema.c2eContain[1].c2eComponents.push(c2ecompo);
+                    }
+                  }
                 }
               });
             }
-            console.log("playlistSchema", playlistSchema);
+
             allPaths?.forEach((filePath) => {
               if (filePath === "playlists") {
                 // schema.c2eContain[1].c2eComponents[1].subManifest = `./${filePath}/c2e.json`;
                 // console.log("updatedc2e", playlistSchema);
                 zip.file(`${filePath}/c2e.json`, JSON.stringify(playlistSchema));
+              } else if (
+                filePath !== "playlists" &&
+                !filePath.includes("/activities")
+                // !filePath.includes("playlists/")
+              ) {
+                let c2ecompo = {
+                  "@id": "c2ens:c2eid-xxx-2",
+                  "@type": "C2E",
+                  "@index": "2",
+                  name: "sample content name",
+                  c2eType: "H5P",
+                  subManifest: `./activities/c2e.json`,
+                };
+                activitySchema.c2eContain[1].c2eComponents.push(c2ecompo);
+                console.log("activitySchema", activitySchema);
+                zip.file(`${filePath}/c2e.json`, JSON.stringify(activitySchema));
+              } else if (
+                filePath !== "playlists" &&
+                !filePath.includes("/activities/") &&
+                filePath.includes("/activities")
+              ) {
+                console.log("activityh5pSchema", activityh5pSchema);
+                zip.file(`${filePath}/c2e.json`, JSON.stringify(activityh5pSchema));
               } else {
                 zip.file(`${filePath}/c2e.json`, JSON.stringify(schema));
               }
             });
 
-            // zip.generateAsync({ type: "blob" }).then((data) => {
-            //   saveAs(data);
-            // });
+            zip.generateAsync({ type: "blob" }).then((data) => {
+              saveAs(data);
+            });
 
             // setcontentData(contents);
             // for (var i = 0; i < contents.length; i++) {
